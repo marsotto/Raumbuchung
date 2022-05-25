@@ -24,7 +24,7 @@ public class RaumbuchungApp extends Application {
 
 		window.setScene(sceneGraph);
 		window.setTitle("Raumbuchung");
-		//window.getIcons().add(new Image(ICON_PATH.toString()));
+		window.getIcons().add(new Image(ICON_PATH.toString()));
 		window.show();
 
 		this.raumbuchungController.registerEventHandlers();
