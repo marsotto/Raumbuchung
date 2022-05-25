@@ -1,4 +1,4 @@
 # Raumbuchung
 App zur Buchung von Bildungskursen
 
-Übungsprojekt für IHK Projekt
+Übungsprojekt als Vorbereitung auf das echte IHK Projekt
