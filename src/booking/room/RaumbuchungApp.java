@@ -23,8 +23,8 @@ public class RaumbuchungApp extends Application {
 		// sceneGraph.getStylesheets().add(CSS_PATH);
 
 		window.setScene(sceneGraph);
-		window.setTitle("Article App");
-		window.getIcons().add(new Image(ICON_PATH.toString()));
+		window.setTitle("Raumbuchung");
+		//window.getIcons().add(new Image(ICON_PATH.toString()));
 		window.show();
 
 		this.raumbuchungController.registerEventHandlers();
