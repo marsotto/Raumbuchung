@@ -6,10 +6,14 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javax.sql.DataSource;
 import com.mysql.cj.jdbc.MysqlDataSource;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
-public class RaumbuchungController implements Initializable {
+public class RaumbuchungController {
 	
 	private final Connection jdbcConnection;
 	
@@ -33,13 +37,5 @@ public class RaumbuchungController implements Initializable {
 		return dataSource;
 	}
 
-	@FXML 
-	
-	
-	@Override
-	public void initialize (URL location, ResourceBundle resources) {
-	
-		
-	}
 }
 
