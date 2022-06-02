@@ -1,5 +1,6 @@
 package booking.room;
 
+import java.util.Date;
 import java.util.Locale;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -7,8 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -19,19 +22,17 @@ import javafx.stage.Stage;
 public class RaumbuchungApp extends Application {
 	static private final String PACKAGE_PATH = RaumbuchungApp.class.getPackage().getName().replace('.', '/');
 	static private final String ICON_PATH = PACKAGE_PATH + "/raumbuchung.png";
-	static private final String CSS_PATH = PACKAGE_PATH + "/raumbuchung.css";
+	//static private final String CSS_PATH = PACKAGE_PATH + "/raumbuchung.css";
 	static private final int WINDOW_WIDTH = 850;
 	static private final int WINDOW_HEIGHT = 650;
 	
 	private RaumbuchungController raumbuchungController;
 	
-
 	public void start (Stage window) throws Exception {
 		Locale.setDefault(Locale.Category.FORMAT, Locale.GERMAN);
 		final BorderPane rootPane = newRootPane();
 		this.raumbuchungController = new RaumbuchungController(rootPane);
 		
-
 		final Scene sceneGraph = new Scene(rootPane, WINDOW_WIDTH, WINDOW_HEIGHT);
 		// sceneGraph.getStylesheets().add(CSS_PATH);
 
@@ -55,7 +56,7 @@ public class RaumbuchungApp extends Application {
 	
 	private BorderPane newRootPane() {
 		BorderPane rootPane = new BorderPane();
-		VBox tableViewBox = new VBox();
+		VBox rowBox = new VBox();
 		VBox topVBox = new VBox();
 		//rowBox.setPrefWidth(Integer.MAX_VALUE);
 		//rowBox.setStyle("-fx-alignment: center");
@@ -72,9 +73,9 @@ public class RaumbuchungApp extends Application {
 		raumbuchung.setStyle("-fx-text-background-color: white;" + "-fx-font-size: 20;");
 		topPane.getChildren().add(raumbuchung);
 		
-		Button bucheButton = new Button("Buchen");
-		bucheButton.setPrefWidth(Integer.MAX_VALUE);
-		bucheButton.setPrefHeight(40);
+		Button buchenButton = new Button("Buchen");
+		buchenButton.setPrefWidth(Integer.MAX_VALUE);
+		buchenButton.setPrefHeight(40);
 		Button aendernButton = new Button("Ändern");
 		aendernButton.setPrefWidth(Integer.MAX_VALUE);
 		aendernButton.setPrefHeight(40);
@@ -90,7 +91,7 @@ public class RaumbuchungApp extends Application {
 		bis.setPrefWidth(Integer.MAX_VALUE);
 		bis.setPrefHeight(40);
 		
-		controlPane.getChildren().addAll(bucheButton, aendernButton, loescheButton, von, bis);
+		controlPane.getChildren().addAll(buchenButton, aendernButton, loescheButton, von, bis);
 		
 		topVBox.getChildren().addAll(topPane, controlPane);
 		
@@ -100,19 +101,37 @@ public class RaumbuchungApp extends Application {
 		
 		HBox bottomPane = new HBox(refreshButton);
 		
-		TableView buTabelle = new TableView();
-		buTabelle.setEditable(true);
-		TableColumn id_buchung = new TableColumn("ID Buchung");
-		TableColumn id_klasse = new TableColumn("ID Klasse");
-		TableColumn id_raum = new TableColumn("ID Raum");
-		TableColumn datum_von = new TableColumn("Von");
-		TableColumn datum_bis = new TableColumn("Bis");
-		buTabelle.getColumns().addAll(id_buchung, id_klasse, id_raum, datum_von, datum_bis);
+		final TableView<BuchungTabellenZeile> buAnsicht = new TableView<>();
+//		buTabelle.getStyleClass().add("articles");
+		buAnsicht.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		buAnsicht.setEditable(false);
+
+		final TableColumn<BuchungTabellenZeile,Integer> id_buchungCol = new TableColumn<>("ID Buchung");
+		id_buchungCol.setCellValueFactory(new PropertyValueFactory<>("ID_Buchung"));
+		id_buchungCol.setMinWidth(50);
 		
-		tableViewBox.getChildren().add(buTabelle);
+		final TableColumn<BuchungTabellenZeile,Integer> id_klasseCol = new TableColumn<>("ID Klasse");
+		id_klasseCol.setCellValueFactory(new PropertyValueFactory<>("ID_Klasse"));
+		id_klasseCol.setMinWidth(50);
+		
+		final TableColumn<BuchungTabellenZeile,Integer> id_raumCol = new TableColumn<>("ID Raum");
+		id_raumCol.setCellValueFactory(new PropertyValueFactory<>("ID_Raum"));
+		id_raumCol.setMinWidth(50);
+		
+		final TableColumn<BuchungTabellenZeile,Date> datum_vonCol = new TableColumn<>("Von");
+		datum_vonCol.setCellValueFactory(new PropertyValueFactory<>("Datum_von"));
+		datum_vonCol.setMinWidth(75);
+		
+		final TableColumn<BuchungTabellenZeile,Date> datum_bisCol = new TableColumn<>("Bis");
+		datum_bisCol.setCellValueFactory(new PropertyValueFactory<>("Datum_bis"));
+		datum_bisCol.setMinWidth(75);
+		
+		buAnsicht.getColumns().addAll(id_buchungCol, id_klasseCol, id_raumCol, datum_vonCol, datum_bisCol);
+		
+		rowBox.getChildren().add(buAnsicht);
 		
 		rootPane.setTop(topVBox);
-		rootPane.setCenter(tableViewBox);
+		rootPane.setCenter(rowBox);
 		rootPane.setBottom(bottomPane);
 
 		return rootPane;
