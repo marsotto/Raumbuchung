@@ -73,8 +73,6 @@ public class RaumbuchungController {
 	}
 
 	private void buchen () {
-		
-		
 		buchenMenuShowing = false;
 	}
 	
@@ -107,13 +105,13 @@ public class RaumbuchungController {
 		this.buAnsicht.getItems().clear();
 		for (final Map<String,Object> buchung : this.buchungen) {
 			final BuchungTabellenZeile buchungTabellenZeile = new BuchungTabellenZeile();
-			buchungTabellenZeile.setIdBuchungProperty((Integer) buchung.get("ID_Buchung"));
-			buchungTabellenZeile.setIdKlasseProperty((Integer) buchung.get("ID_Klasse"));
-			buchungTabellenZeile.setIdRaumProperty((Integer) buchung.get("ID_Raum"));
-			buchungTabellenZeile.setvonDateProperty((Date) buchung.get("Datum_von"));
-			buchungTabellenZeile.setbisDateProperty((Date) buchung.get("Datum_bis"));
+			buchungTabellenZeile.setID_Buchung((Integer) buchung.get("ID_Buchung"));
+			buchungTabellenZeile.setID_Klasse((Integer) buchung.get("ID_Klasse"));
+			buchungTabellenZeile.setID_Raum((Integer) buchung.get("ID_Raum"));
+			buchungTabellenZeile.setDatum_von((Date) buchung.get("Datum_von"));
+			buchungTabellenZeile.setDatum_bis((Date) buchung.get("Datum_bis"));
 			this.buAnsicht.getItems().add(buchungTabellenZeile);
-			System.out.println(buchung);
+//			System.out.println(this.buchungen);
 		}
 		
 	}
